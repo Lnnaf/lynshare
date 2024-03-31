@@ -5,6 +5,9 @@
  * example: Linh Nguyen Van is LNV
  */
 export const getInitials = (words: string) => {
+  if(!words) {
+    return "UA"
+  }
   const _words = words.split(" ");
   const initials = _words.map(word => word.charAt(0)).join("");
   return initials.toUpperCase();
