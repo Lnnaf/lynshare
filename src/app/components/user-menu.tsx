@@ -7,35 +7,31 @@ import {
 	DropdownMenuSeparator,
 	DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
-import Link from "next/link";
+import { AuthUser } from "@/models/auth-user";
 import { FunctionComponent } from "react";
 import { signOut } from "../services/auth";
 import UserAvatar from "./user-avatar";
-import { User } from "next-auth";
 
 interface UserMenuProps {
-	user: User;
+	user: AuthUser
 }
 
 const UserMenu: FunctionComponent<UserMenuProps> = (props) => {
-	const user = props?.user;
+	const user = props?.user
 	return (
 		<section>
 			<DropdownMenu>
-				<DropdownMenuTrigger>
-					<UserAvatar user={user} />
+				<DropdownMenuTrigger asChild>
+				<UserAvatar user={user} />
 				</DropdownMenuTrigger>
 				<DropdownMenuContent className="w-56">
 					<DropdownMenuLabel>My Account</DropdownMenuLabel>
 					<DropdownMenuSeparator />
 					<DropdownMenuGroup>
-						<Link href={"/profile/manage"}>
-							<DropdownMenuItem>Profile</DropdownMenuItem>
-						</Link>
+						<DropdownMenuItem>Profile</DropdownMenuItem>
+
 						<DropdownMenuSeparator />
-						<DropdownMenuItem onClick={() => signOut()}>
-							Sign out
-						</DropdownMenuItem>
+						<DropdownMenuItem onClick={() => signOut()}>Sign out</DropdownMenuItem>
 					</DropdownMenuGroup>
 				</DropdownMenuContent>
 			</DropdownMenu>

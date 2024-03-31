@@ -10,20 +10,12 @@ import {
 import { usePathname } from "next/navigation";
 import { getUrlPath } from "../utilities/url-urils";
 import { toCapitalizeFirstChar } from "../utilities/string-utils";
-import React from "react";
 
-interface props {
-	addtionalItems?: string[]
-}
-export default function BreadCrumb(props: props) {
-
+export default function BreadCrumb() {
 	const pathname = usePathname();
+	console.log(pathname);
+
 	const paths = getUrlPath(pathname);
-	paths.map(toCapitalizeFirstChar);
-	
-	if (props.addtionalItems) {
-		paths.push.apply(props.addtionalItems)
-	}
 	return (
 		<Breadcrumb>
 			<BreadcrumbList>
@@ -32,12 +24,12 @@ export default function BreadCrumb(props: props) {
 				</BreadcrumbItem>
 				{paths.map((path, key) => {
 					return (
-						<React.Fragment key={key}>
+						<>
 							<BreadcrumbSeparator />
-							<BreadcrumbItem>
-								<BreadcrumbPage>{path}</BreadcrumbPage>
+							<BreadcrumbItem key={key}>
+								<BreadcrumbPage>{toCapitalizeFirstChar(path)}</BreadcrumbPage>
 							</BreadcrumbItem>
-						</React.Fragment>
+						</>
 					);
 				})}
 			</BreadcrumbList>

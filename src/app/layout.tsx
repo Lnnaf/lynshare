@@ -5,7 +5,6 @@ import "./globals.css";
 import AuthProvider from "./context/AuthProvider";
 import { ThemeProvider } from "./components/theme-provider";
 import { Navbar } from "./components/navbar";
-import { Toaster } from "@/components/ui/toaster";
 const fontSans = FontSans({
 	subsets: ["latin"],
 	variable: "--font-sans",
@@ -34,10 +33,7 @@ export default function RootLayout({
 					enableSystem
 					disableTransitionOnChange
 				>
-					<AuthProvider>
-						<Navbar /> {children}
-					</AuthProvider>
-					<Toaster />
+					<AuthProvider>			<Navbar/> {children}</AuthProvider>
 				</ThemeProvider>
 			</body>
 		</html>

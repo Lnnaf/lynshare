@@ -11,6 +11,6 @@ export const signOut = (redirectUrl?: string) => {
 export const signIn = (provider: NextAuthProvider, callbackUrl?: string) =>  {
   nextAuthSignIn(provider, {
     redirect: true,
-    callbackUrl: 'http://localhost:3000/profile/manage' ,
+    callbackUrl: callbackUrl || '/' ,
   })
 }

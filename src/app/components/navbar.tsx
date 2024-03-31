@@ -1,6 +1,7 @@
 "use client";
 
 import { Button } from "@/components/ui/button";
+import { AuthUser } from "@/models/auth-user";
 import { motion } from "framer-motion";
 import { Menu, X } from "lucide-react";
 import { useSession } from "next-auth/react";
@@ -12,9 +13,7 @@ import { Skeleton } from "@/components/ui/skeleton";
 export function Navbar() {
 	const [onMobileMenuTongle, setOnMobileMenuTongle] = useState(false);
 	const { status, data: session } = useSession();
-	let user = session?.user
-	
-	
+	const user = session?.user as AuthUser;
 
 	return (
 		<div className="sticky z-40 top-0 bg-background/80 backdrop-blur-lg border-b border-border">
@@ -62,7 +61,7 @@ export function Navbar() {
 							<>
 								{!user ? (
 									<Button variant="outline">
-										<a href="/auth/login">Sign in</a>
+										<a href="/auth/signin">Sign in</a>
 									</Button>
 								) : (
 									<UserMenu user={user} />

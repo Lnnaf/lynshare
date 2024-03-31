@@ -12,7 +12,6 @@ interface ButtonSigninProps {
 }
 
 const ButtonAuth: FunctionComponent<ButtonSigninProps> = (props) => {
-	props.callbackUrl
 	return (
 		<>
 			{props.isSignIn ? (
