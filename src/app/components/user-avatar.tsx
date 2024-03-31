@@ -1,16 +1,17 @@
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
-import { AuthUser } from "@/models/auth-user";
 import { getInitials } from "../utilities/string-utils";
+import { User } from "next-auth";
 
 interface props {
-  user: AuthUser
+  user: User
 }
 export default function UserAvatar(props: props) {
   const user = props.user
-  const initialName = getInitials(user.name)
+
+  const initialName = getInitials(user.name as string)
 	return (
-		<Avatar>
-			<AvatarImage src={user.image} />
+		<Avatar className="focus:outline-none">
+			<AvatarImage src={user.image as string} />
 			<AvatarFallback>{initialName}</AvatarFallback>
 		</Avatar>
 	);

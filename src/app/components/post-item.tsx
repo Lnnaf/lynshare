@@ -7,21 +7,41 @@ import {
 	CardHeader,
 	CardTitle,
 } from "@/components/ui/card";
+import { Post, User } from "@prisma/client";
+import Image from "next/image";
+import { PostDTO } from "@/models/post";
+import UserAvatar from "./user-avatar";
+import Link from "next/link";
 
-interface PostItemProps {}
+interface PostItemProps {
+	post: PostDTO;
+}
 
-const PostItem: FunctionComponent<PostItemProps> = () => {
+const PostItem: FunctionComponent<PostItemProps> = (props) => {
+	const post = props.post;
+
 	return (
 		<Card className="">
-			<CardHeader>
-				<CardTitle>Post Title</CardTitle>
-				<CardDescription>Post Description</CardDescription>
-			</CardHeader>
-			<CardContent>
-				<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>
-			</CardContent>
+			<Link href={`post/${post.id}`}>
+				<CardHeader>
+					<CardTitle>{post.title}</CardTitle>
+					<CardDescription>Post Description</CardDescription>
+				</CardHeader>
+				<CardContent className="flex flex-col">
+					<div className="w-full relative h-40">
+						<Image
+							alt={post.title}
+							src={post.thumbnail}
+							fill
+							className="rounded-xl"
+						/>
+					</div>
+					{/* <span>{post.content}</span> */}
+				</CardContent>
+			</Link>
 			<CardFooter>
-				<p>Post Footer</p>
+				<UserAvatar user={post.user as User} />
+				<p>{post.user.name}</p>
 			</CardFooter>
 		</Card>
 	);
