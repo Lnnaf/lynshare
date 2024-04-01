@@ -1,11 +1,11 @@
 import { PrismaClient } from "@prisma/client";
 
-
 export class PrismaService {
   private static instance: PrismaService;
+  private prismaClient: PrismaClient;
 
   private constructor() {
-    // Private constructor to prevent instantiation outside the class
+    this.prismaClient = new PrismaClient();
   }
 
   public static getInstance(): PrismaService {
@@ -15,7 +15,7 @@ export class PrismaService {
     return PrismaService.instance;
   }
 
-  public init(): PrismaClient {
-    return new PrismaClient()
+  public client(): PrismaClient {
+    return this.prismaClient;
   }
 }

@@ -42,6 +42,7 @@ model User {
   accounts      Account[]
   posts         Post[]
   sessions      Session[]
+  lastChangedName DateTime?
 }
 
 model VerificationToken {

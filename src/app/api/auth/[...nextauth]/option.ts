@@ -2,7 +2,7 @@ import { NextAuthOptions } from "next-auth";
 import GoogleProvider from "next-auth/providers/google";
 import { PrismaAdapter } from "@next-auth/prisma-adapter"
 import { PrismaClient } from "@prisma/client"
-import { findUserById } from "@/app/services/user.service";
+import { findUserById } from "@/services/user.service";
 
 const prisma = new PrismaClient()
 

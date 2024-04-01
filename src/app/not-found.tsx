@@ -1,6 +1,6 @@
 'use client'
 import { ErrorType } from "@/models/http-code-error-type";
-import ErrorComponent from "./components/error";
+import ErrorComponent from "../components/layouts/error";
 
 export default function NotFound() {
 	return (

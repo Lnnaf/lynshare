@@ -1,9 +1,9 @@
-import BreadCrumb from "@/app/components/breadcrumb";
-import Container from "@/app/components/container";
-import UserAvatar from "@/app/components/user-avatar";
+import BreadCrumb from "@/components/common/breadcrumb";
+import Container from "@/components/layouts/container";
+import UserAvatar from "@/components/common/user-avatar";
 import NotFound from "@/app/not-found";
-import { findById } from "@/app/services/post.service";
-import { formatDate } from "@/app/utilities/date-utils";
+import { findById } from "@/services/post.service";
+import { formatDate } from "@/lib/date-utils";
 import { PostDTO } from "@/models/post";
 import { User } from "@prisma/client";
 import Image from "next/image";

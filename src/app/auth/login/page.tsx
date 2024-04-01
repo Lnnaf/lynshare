@@ -1,5 +1,5 @@
 
-import ButtonAuth from "@/app/components/buttons/button-auth";
+import ButtonAuth from "@/components/common/button-auth";
 import Image from "next/image";
 import { FunctionComponent } from "react";
 

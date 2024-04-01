@@ -1,4 +1,4 @@
-import { addPost } from "@/app/services/post.service";
+import { addPost } from "@/services/post.service";
 import { Post } from "@prisma/client";
 
 

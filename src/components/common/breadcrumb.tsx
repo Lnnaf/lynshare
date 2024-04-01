@@ -8,8 +8,8 @@ import {
 	BreadcrumbSeparator,
 } from "@/components/ui/breadcrumb";
 import { usePathname } from "next/navigation";
-import { getUrlPath } from "../utilities/url-urils";
-import { toCapitalizeFirstChar } from "../utilities/string-utils";
+import { getUrlPath } from "../../lib/url-urils";
+import { toCapitalizeFirstChar } from "../../lib/string-utils";
 import React from "react";
 
 interface props {

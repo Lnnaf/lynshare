@@ -1,6 +1,10 @@
-import { updateUserImage } from "@/app/services/user.service";
+import { updateUserImage } from "@/services/user.service";
 
-
+/**
+ * Update user avatar
+ * @param req 
+ * @returns 
+ */
 export async function PUT(req: Request) {
   const reqData: {user_id: string, user_image: string } = await req.json();
   const result = await updateUserImage(reqData.user_id, reqData.user_image)
@@ -10,3 +14,4 @@ export async function PUT(req: Request) {
   }
   return Response.json(result);
 }
+

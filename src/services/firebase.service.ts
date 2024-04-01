@@ -1,5 +1,5 @@
 import { ref, uploadBytesResumable } from "@firebase/storage";
-import storage from "../firebase.config";
+import storage from "../app/firebase.config";
 import {
 	FullMetadata,
 	StorageError,

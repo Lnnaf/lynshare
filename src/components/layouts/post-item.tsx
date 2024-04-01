@@ -10,7 +10,7 @@ import {
 import { Post, User } from "@prisma/client";
 import Image from "next/image";
 import { PostDTO } from "@/models/post";
-import UserAvatar from "./user-avatar";
+import UserAvatar from "../common/user-avatar";
 import Link from "next/link";
 
 interface PostItemProps {

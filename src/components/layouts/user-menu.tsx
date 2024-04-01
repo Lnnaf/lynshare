@@ -9,8 +9,8 @@ import {
 } from "@/components/ui/dropdown-menu";
 import Link from "next/link";
 import { FunctionComponent } from "react";
-import { signOut } from "../services/auth";
-import UserAvatar from "./user-avatar";
+import { signOut } from "../../services/auth";
+import UserAvatar from "../common/user-avatar";
 import { User } from "next-auth";
 
 interface UserMenuProps {

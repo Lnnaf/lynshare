@@ -1,5 +1,5 @@
 import { ReactNode } from "react";
-import BreadCrumb from "./breadcrumb";
+import BreadCrumb from "../common/breadcrumb";
 interface props {
   children: ReactNode;
 }

@@ -1,7 +1,7 @@
 import { Post } from "@prisma/client";
 import { PrismaService } from "./prisma.service";
 
-const prisma = PrismaService.getInstance().init();
+const prisma = PrismaService.getInstance().client();
 
 export const getAllPosts = async () => {
 	return await prisma.post.findMany({

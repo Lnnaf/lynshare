@@ -1,13 +1,13 @@
 "use client";
-import Container from "@/app/components/container";
-import ProfileSkeleton from "@/app/components/profile.skeleton";
-import { ProfileForm } from "@/app/forms/profile.form";
-import ApiService from "@/app/services/api.service";
+import Container from "@/components/layouts/container";
+import ProfileSkeleton from "@/components/layouts/profile.skeleton";
+import { ProfileForm } from "@/components/forms/profile.form";
+import ApiService, { API_PATHS } from "@/services/api.service";
 import {
 	FirebaseService,
 	FirebaseUploadServiceParam,
 	StorageType,
-} from "@/app/services/firebase.service";
+} from "@/services/firebase.service";
 import { Button } from "@/components/ui/button";
 import { useToast } from "@/components/ui/use-toast";
 import { FileCheck2, ImageUp, Loader } from "lucide-react";
@@ -32,7 +32,7 @@ export default function ProfileManage() {
 	useEffect(() => {
 		return () => {
 			setAvatar(session?.user.image as string);
-		}
+		};
 	}, [session]);
 
 	const onImageUpload = (event: ChangeEvent<HTMLInputElement>) => {
@@ -48,8 +48,8 @@ export default function ProfileManage() {
 
 	const onChangeAvatar = () => {
 		const firebase = FirebaseService.getInstance();
-		if (imageUpload) {
-		}
+		if (!imageUpload) return;
+
 		const param: FirebaseUploadServiceParam = {
 			file: imageUpload,
 			fileName: `${user.id}_${moment().valueOf()}`,
@@ -64,16 +64,15 @@ export default function ProfileManage() {
 			},
 			onSuccess: async (imageUrl) => {
 				toast({
-					title: "Scheduled: Catch up",
-					description: "Friday, February 10, 2023 at 5:57 PM",
+					title: "Upload Successful",
+					description: "Your avatar has been updated",
 				});
 				setImageUpload(undefined);
 				setIsLoading(false);
-				//this will reload the page without doing SSR
 				setAvatar(imageUrl);
 				if (session) {
 					session.user.image = imageUrl;
-					ApiService.put("/user/image", {
+					await ApiService.put(API_PATHS.updateUserAvatar, {
 						user_id: user.id,
 						user_image: imageUrl,
 					});
@@ -84,6 +83,7 @@ export default function ProfileManage() {
 		};
 		firebase.upload(param);
 	};
+	
 	return (
 		<Container>
 			{user ? (
@@ -134,7 +134,7 @@ export default function ProfileManage() {
 					)}
 					{/* form*/}
 					<div>
-						<ProfileForm user={user} />
+						<ProfileForm user_id={user.id} />
 					</div>
 				</div>
 			) : (

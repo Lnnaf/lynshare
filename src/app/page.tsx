@@ -1,7 +1,7 @@
 import Link from "next/link";
-import PostItem from "./components/post-item";
-import PostMenu from "./components/post-menu";
-import { getAllPosts } from "./services/post.service";
+import PostItem from "../components/layouts/post-item";
+import PostMenu from "../components/layouts/post-menu";
+import { getAllPosts } from "../services/post.service";
 import { PostDTO } from "@/models/post";
 
 export default async function Home() {

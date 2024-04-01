@@ -1,18 +1,24 @@
 import axios, { AxiosInstance, AxiosRequestConfig, AxiosResponse } from 'axios';
 
 // Define a generic type for the response data
-interface ApiResponse<T> {
-  data: T;
-}
+
+// Define API paths
+export const API_PATHS = {
+  // -------- USER -----------//
+  updateUserAvatar: '/user/avatar',
+  updateUserInfor: '/user/info',
+  getUserById: '/user/:user_id',
+  // -------- POSTs -----------//
+  addPost: '/post'
+};
 
 // Define a generic function for making API requests
 async function apiRequest<T>(
   config: AxiosRequestConfig
 ): Promise<T> {
   try {
-    
-    const response: AxiosResponse<ApiResponse<T>> = await apiClient.request(config);
-    return response.data.data;
+    const response: AxiosResponse<T> = await apiClient.request(config);
+    return response.data;
   } catch (error) {
     // Handle errors here
     

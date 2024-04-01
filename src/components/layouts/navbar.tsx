@@ -5,7 +5,7 @@ import { motion } from "framer-motion";
 import { Menu, X } from "lucide-react";
 import { useSession } from "next-auth/react";
 import { useEffect, useState } from "react";
-import SwitchTheme from "./buttons/switch-theme";
+import SwitchTheme from "../common/switch-theme";
 import UserMenu from "./user-menu";
 import { Skeleton } from "@/components/ui/skeleton";
 

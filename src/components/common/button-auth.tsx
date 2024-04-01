@@ -1,6 +1,6 @@
 "use client";
-import { NextAuthProvider } from "@/app/enums/next-auth-provide";
-import { signIn, signOut } from "@/app/services/auth";
+import { NextAuthProvider } from "@/models/enums/next-auth-provide";
+import { signIn, signOut } from "@/services/auth";
 import { FunctionComponent } from "react";
 import { Button } from "@/components/ui/button"
 import Image from "next/image";

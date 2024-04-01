@@ -1,4 +1,4 @@
-import { NextAuthProvider } from "@/app/enums/next-auth-provide";
+import { NextAuthProvider } from "@/models/enums/next-auth-provide";
 import {
 	signOut as nextAuthSignOut,
 	signIn as nextAuthSignIn,

@@ -1,5 +1,5 @@
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
-import { getInitials } from "../utilities/string-utils";
+import { getInitials } from "../../lib/string-utils";
 import { User } from "next-auth";
 
 interface props {
