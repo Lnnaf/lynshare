@@ -26,9 +26,9 @@ interface prop {
 }
 
 const formSchema = z.object({
-	name: z.string().min(2, {
-		message: "Username must be at least 2 characters.",
-	}),
+	name: z.string().min(5, {
+		message: "Display name must be at least 5 characters.",
+	}).max(20, {	message: "Display name only has maximum 20 characters." }),
 	email: z.string().email({ message: "Invalid email address" }).optional(),
 	user_id: z.string().optional(),
 });
@@ -94,7 +94,7 @@ export function ProfileForm(props: prop) {
 	}, [user]);
 
 	const checkLastChangedNameValid = () => {
-		if (user?.lastChangedName && isEnoughDaysPassed(user?.lastChangedName, 30)) {
+		if (!user?.lastChangedName || isEnoughDaysPassed(user?.lastChangedName, 30)) {
 			return false;
 		}
 		return true;
@@ -147,7 +147,7 @@ export function ProfileForm(props: prop) {
 								<FormItem>
 									<FormLabel>Display name</FormLabel>
 									<FormControl>
-										<Input
+										<Input maxLength={20}
 											placeholder={user?.name || ""}
 											{...field}
 										/>
