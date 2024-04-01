@@ -20,6 +20,7 @@ import { useEffect, useState } from "react";
 import { User } from "@prisma/client";
 import moment from "moment";
 import { CalendarClock } from "lucide-react";
+import { isEnoughDaysPassed } from "@/lib/date-utils";
 interface prop {
 	user_id: string;
 }
@@ -93,15 +94,10 @@ export function ProfileForm(props: prop) {
 	}, [user]);
 
 	const checkLastChangedNameValid = () => {
-		const oneMonthInMilliseconds = 1000 * 60 * 60 * 24 * 30;
-		if (
-			user?.lastChangedName &&
-			Date.now() - new Date(user.lastChangedName).getTime() <
-				oneMonthInMilliseconds
-		) {
-			return true;
+		if (user?.lastChangedName && isEnoughDaysPassed(user?.lastChangedName, 30)) {
+			return false;
 		}
-		return false;
+		return true;
 	};
 
 
