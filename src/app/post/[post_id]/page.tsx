@@ -1,6 +1,11 @@
-import BreadCrumb from "@/app/components/breadcrumb";
-import UserAvatar from "@/app/components/user-avatar";
-import { AuthUser } from "@/models/auth-user";
+import BreadCrumb from "@/components/common/breadcrumb";
+import Container from "@/components/layouts/container";
+import UserAvatar from "@/components/common/user-avatar";
+import NotFound from "@/app/not-found";
+import { findById } from "@/services/post.service";
+import { formatDate } from "@/lib/date-utils";
+import { PostDTO } from "@/models/post";
+import { User } from "@prisma/client";
 import Image from "next/image";
 import Link from "next/link";
 
@@ -10,52 +15,49 @@ interface props {
 	};
 }
 
-export default function Post(props: props) {
-	const post_id = props.params.post_id;
-  const author: AuthUser = {
-    email: '123@123',
-    name: 'Linh Nguyen Van',
-    image: 'https://lh3.googleusercontent.com/a/ACg8ocJvEqsdO7d5yTMRljUxjMHPrUicFWUFGoHrGkQCIwC5XrA=s96-c'
-  }
+export default async function Post(props: props) {
+	const post_id = Number(props.params.post_id);
+	const post: PostDTO | null = await findById(post_id);
+	if (post == null) {
+		return <NotFound />;
+	}
 	return (
-		<section className="lg:mx-auto max-w-[960px]">
-			<div className="m-10">
-				<BreadCrumb />
-			</div>
+		<Container>
 			<div className="flex flex-col">
 				<div className="max-w h-96 relative">
 					<Image
-						src={"https://picsum.photos/200/300"}
+						src={post.thumbnail}
 						layout="fill"
-              className="rounded-t-xl"
+						className="rounded-t-xl"
 						alt=""
 					/>
 				</div>
-        {/* Author section */}
-        <div className="flex mt-4">
-          <div>
-            <UserAvatar user={author}/>
-          </div>
-          <div className="flex flex-col ml-2">
-            <p>{author.name}</p>
-            <p>Posted on Mar 21 • Originally published</p>  
-          </div>
-        </div>
-        {/* Title section */}
-        <div className="text-5xl mt-2">
-          <p>9 Simple 404 Page Examples To Use Now Into Your Project</p>
-        </div>
-        {/* tags section */}
-        <div className="mt-2 text-lg flex gap-4">
-          <Link href="/">#123</Link>
-          <Link href="/">#123</Link>
-          <Link href="/">#123</Link>
-        </div>
-        {/* content */}
-        <div>
-          
-        </div>
+				{/* Author section */}
+				<div className="flex mt-4">
+					<div>
+						<UserAvatar user={post.user as User} />
+					</div>
+					<div className="flex flex-col ml-2">
+						<p>{post.user.name}</p>
+						<p>{`Posted on ${formatDate(
+							post.createdAt
+						)} • Originally published`}</p>
+					</div>
+				</div>
+				{/* Title section */}
+				<div className="text-5xl mt-2">
+					<p>{post.title}</p>
+				</div>
+				{/* tags section */}
+				<div className="mt-2 text-lg flex gap-4">
+					<Link href="/">#123</Link>
+					<Link href="/">#123</Link>
+					<Link href="/">#123</Link>
+				</div>
+				{/* content */}
+				<span>{post.content}</span>
+				<div></div>
 			</div>
-		</section>
+		</Container>
 	);
 }
