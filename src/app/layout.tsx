@@ -1,11 +1,12 @@
+import { Toaster } from "@/components/ui/toaster";
+import { cn } from "@/lib/utils";
 import type { Metadata } from "next";
 import { Inter as FontSans } from "next/font/google";
-import { cn } from "@/lib/utils";
-import "./globals.css";
+import { Navbar } from "../components/layouts/navbar";
 import AuthProvider from "../context/auth-provider";
 import { ThemeProvider } from "../context/theme-provider";
-import { Navbar } from "../components/layouts/navbar";
-import { Toaster } from "@/components/ui/toaster";
+import "./globals.css";
+import "../components/plate-ui/code-block-element.css"
 const fontSans = FontSans({
 	subsets: ["latin"],
 	variable: "--font-sans",
@@ -35,7 +36,7 @@ export default function RootLayout({
 					disableTransitionOnChange
 				>
 					<AuthProvider>
-						<Navbar /> {children}
+							<Navbar /> {children}
 					</AuthProvider>
 					<Toaster />
 				</ThemeProvider>

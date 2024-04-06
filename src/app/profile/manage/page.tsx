@@ -17,6 +17,7 @@ import { useSession } from "next-auth/react";
 import Image from "next/image";
 import { useRouter } from "next/navigation";
 import { ChangeEvent, useEffect, useState } from "react";
+import { PlateEditor } from "@/components/common/plate.editor";
 
 export default function ProfileManage() {
 	const { data: session, update } = useSession();

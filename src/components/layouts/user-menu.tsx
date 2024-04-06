@@ -32,6 +32,9 @@ const UserMenu: FunctionComponent<UserMenuProps> = (props) => {
 						<Link href={"/profile/manage"}>
 							<DropdownMenuItem>Profile</DropdownMenuItem>
 						</Link>
+						<Link href={"/post/manage"}>
+							<DropdownMenuItem>Post Manage</DropdownMenuItem>
+						</Link>
 						<DropdownMenuSeparator />
 						<DropdownMenuItem onClick={() => signOut()}>
 							Sign out

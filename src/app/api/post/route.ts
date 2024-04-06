@@ -3,6 +3,8 @@ import { Post } from "@prisma/client";
 
 
 export async function POST(req: Request) {
+  console.log('POST /api/post');
+  
   const newPost: Post = await req.json();
   const result = await addPost(newPost)
   if (!result) {
