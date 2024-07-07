@@ -1,26 +1,26 @@
 "use client";
+import { ProfileForm } from "@/components/forms/profile.form";
 import Container from "@/components/layouts/container";
 import ProfileSkeleton from "@/components/layouts/profile.skeleton";
-import { ProfileForm } from "@/components/forms/profile.form";
+import { Button } from "@/components/ui/button";
+import { useToast } from "@/components/ui/use-toast";
 import ApiService, { API_PATHS } from "@/services/api.service";
 import {
 	FirebaseService,
 	FirebaseUploadServiceParam,
 	StorageType,
 } from "@/services/firebase.service";
-import { Button } from "@/components/ui/button";
-import { useToast } from "@/components/ui/use-toast";
 import { FileCheck2, ImageUp, Loader } from "lucide-react";
 import moment from "moment";
 
+import { Skeleton } from "@/components/ui/skeleton";
 import { useSession } from "next-auth/react";
 import Image from "next/image";
 import { useRouter } from "next/navigation";
 import { ChangeEvent, useEffect, useState } from "react";
-import { PlateEditor } from "@/components/common/plate.editor";
 
 export default function ProfileManage() {
-	const { data: session, update } = useSession();
+	const { data: session, update, status } = useSession();
 	const router = useRouter();
 	const { toast } = useToast();
 
@@ -31,10 +31,9 @@ export default function ProfileManage() {
 	const [isLoading, setIsLoading] = useState<Boolean>(false);
 
 	useEffect(() => {
-		return () => {
-			setAvatar(session?.user.image as string);
-		};
-	}, [session]);
+		if (status === 'loading') return;
+		setAvatar(session?.user.image as string);
+	}, [session, status]);
 
 	const onImageUpload = (event: ChangeEvent<HTMLInputElement>) => {
 		if (event.target.files) {
@@ -85,17 +84,9 @@ export default function ProfileManage() {
 		firebase.upload(param);
 	};
 	
-	return (
-		<Container>
-			{user ? (
-				<div className="flex flex-col">
-					{/* avatar */}
-					<div
-						className="w-60 h-60 relative"
-						onMouseOver={() => setOnMouseOnAvatar(true)}
-						onMouseLeave={() => setOnMouseOnAvatar(false)}
-					>
-						<Image
+	const renderAvatar = () => {
+		return <>
+			<Image
 							className="rounded-full"
 							src={avatar as string}
 							alt="user-avatar"
@@ -116,6 +107,20 @@ export default function ProfileManage() {
 								</label>
 							</div>
 						)}
+		</>
+	}
+
+	return (
+		<Container>
+			{user ? (
+				<div className="flex flex-col">
+					{/* avatar */}
+					<div
+						className="w-60 h-60 relative"
+						onMouseOver={() => setOnMouseOnAvatar(true)}
+						onMouseLeave={() => setOnMouseOnAvatar(false)}
+					>
+						{status === "loading" ? <Skeleton className="w-60 h-60 rounded-full" /> : renderAvatar()}
 					</div>
 					{imageUpload && (
 						<div className="flex p-2 gap-2 items-center">

@@ -8,6 +8,7 @@ import { useEffect, useState } from "react";
 import SwitchTheme from "../common/switch-theme";
 import UserMenu from "./user-menu";
 import { Skeleton } from "@/components/ui/skeleton";
+import Link from "next/link";
 
 export function Navbar() {
 	const [onMobileMenuTongle, setOnMobileMenuTongle] = useState(false);
@@ -22,7 +23,9 @@ export function Navbar() {
 				<div className="mr-4 md:mr-1 hidden md:flex">
 					{/* logo */}
 					<div className="mr-4 md:mr-2 lg:mr-6 flex items-center lg:space-x1 xl:space-x-2">
-						<span>This is logo</span>
+						<Link href="/"> 
+							<span>This is logo</span>
+						</Link>
 					</div>
 					<nav className="flex items-center max-lg:space-x-4 space-x-6 text-sm font-medium">
 						<a
@@ -60,7 +63,7 @@ export function Navbar() {
 					<nav className="flex items-center">
 						{status !== "loading" ? (
 							<>
-								{!user ? (
+								{!user || !session ? (
 									<Button variant="outline">
 										<a href="/auth/login">Sign in</a>
 									</Button>

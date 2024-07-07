@@ -1,41 +1,58 @@
-"use client";
-import { PlateEditor } from "@/components/common/plate.editor";
-import Container from "@/components/layouts/container";
-import { Button } from "@/components/ui/button";
-import ApiService, { API_PATHS } from "@/services/api.service";
-import { useSession } from "next-auth/react";
-import { useState } from "react";
+'use client'
+import { columns } from '@/components/common/tables/post/column'
+import { DataTable } from '@/components/common/tables/table'
+import LeftNavigation from '@/components/layouts/left-navigation'
+import { PostEditor } from '@/components/layouts/post-editor'
+import { PostDTO } from '@/models/post'
+import ApiService, { API_PATHS } from '@/services/api.service'
+import { useSession } from 'next-auth/react'
+import { useEffect, useState } from 'react'
 
 export default function ProfileManage() {
-  const [data, setData] = useState(null);  
-
-  const handleDataChange = (newData: any) => {
-    setData(newData);
-  }
-
-  const {data: session} = useSession()
-  const saveData = async () => {
-    console.log(JSON.stringify(data));
-    
-    const post = {
-      title: "test",
-      content: JSON.stringify(data),
-      thumbnail: "https://via.placeholder.com/150",
-      authorId: session?.user.id,
+  const { data: session, status } = useSession()
+  const [hash, setHash] = useState<string>('posts')
+  const [posts, setPosts] = useState<PostDTO[]>([])
+  const [postsWaitForApprove, setPostsWaitForApprove] = useState<PostDTO[]>([])
+  useEffect(() => {
+    const getPosts = async () => {
+      if (status !== 'authenticated' && !session) return
+      const userId = session.user.id
+      const data: PostDTO[] = await ApiService.get(
+        API_PATHS.getPostsByUserId.replace(':user_id', userId)
+      )
+      const dataWaitForApprove: PostDTO[] = await ApiService.get(
+        API_PATHS.getPostsWaitForApprove.replace(':user_id', userId)
+      )
+      setPosts(data)
+      setPostsWaitForApprove(dataWaitForApprove)
     }
-    try {
-      // await ApiService.post(API_PATHS.addPost, post)
-    } catch (error) {
-      console.error(error)
-    }
-  }
+    getPosts()
+  }, [status])
 
   return (
-      <Container>
-        <PlateEditor data={data} onDataChange={handleDataChange} />
-        <Button onClick={() => {
-          saveData()
-        }}>Submit</Button>
-      </Container>
-  );
+    <div className="flex md:flex-row min-[375px]:flex-col">
+      <div className='max-w-xs:w-full xl:w-2/12'>
+        <LeftNavigation hash={hash} setHash={setHash} />
+      </div>
+      <div className="w-full mt-14 lg:w-8/12">
+        <section className="">
+          {hash === 'posts' && (
+            <div className="">
+              <DataTable columns={columns} data={posts} />
+            </div>
+          )}
+          {hash === 'create' && (
+            <div className="">
+              <PostEditor />
+            </div>
+          )}
+          {hash === 'approve' && (
+            <div className="">
+              <DataTable columns={columns} data={postsWaitForApprove} />
+            </div>
+          )}
+        </section>
+      </div>
+    </div>
+  )
 }

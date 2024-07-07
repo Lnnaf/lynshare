@@ -6,7 +6,6 @@ interface param {
 }
 export async function GET(req: NextRequest, { params }: { params: param }) {
 	const user_id = params.user_id;
-	console.log(params);
 
 	if (!user_id) {
 		return Response.json({ status: "failed" }, { status: 400 });

@@ -9,7 +9,10 @@ export const API_PATHS = {
   updateUserInfor: '/user/info',
   getUserById: '/user/:user_id',
   // -------- POSTs -----------//
-  addPost: '/post'
+  addPost: '/post',
+  getPostsByUserId: '/post/user/:user_id',
+  getPostsWaitForApprove: '/post/user/:user_id?published=false',
+  getPostsByCategory: '/post/category/:category_name',
 };
 
 // Define a generic function for making API requests
@@ -21,7 +24,6 @@ async function apiRequest<T>(
     return response.data;
   } catch (error) {
     // Handle errors here
-    
     throw error;
   }
 }

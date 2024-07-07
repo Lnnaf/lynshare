@@ -1,11 +1,11 @@
 import Link from "next/link";
 import PostItem from "../components/layouts/post-item";
 import PostMenu from "../components/layouts/post-menu";
-import { getAllPosts } from "../services/post.service";
+import { findPosts } from "../services/post.service";
 import { PostDTO } from "@/models/post";
 
 export default async function Home() {
-	const posts: PostDTO[] = await getAllPosts()
+	const posts: PostDTO[] = await findPosts()
 	return (
 		<section className="grid md:ml-10">
 			<div className="banner my-4- h-32"></div>

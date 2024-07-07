@@ -9,10 +9,10 @@ datasource db {
 
 model Account {
   id                String  @id @default(cuid())
-  userId            String
+  userId            String  @map("user_id")
   type              String
   provider          String
-  providerAccountId String
+  providerAccountId String  @map("provider_account_id")
   refresh_token     String?
   access_token      String?
   expires_at        Int?
@@ -23,26 +23,31 @@ model Account {
   user              User    @relation(fields: [userId], references: [id], onDelete: Cascade)
 
   @@unique([provider, providerAccountId])
+  @@map("account")
 }
 
 model Session {
   id           String   @id @default(cuid())
-  sessionToken String   @unique
-  userId       String
+  sessionToken String   @unique @map("session_token")
+  userId       String   @map("user_id")
   expires      DateTime
   user         User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@map("session")
 }
 
 model User {
   id              String    @id @default(cuid())
   email           String?   @unique
   name            String?   @db.VarChar(20)
-  emailVerified   DateTime?
+  emailVerified   DateTime? @map("email_verified")
   image           String?
   accounts        Account[]
   posts           Post[]
   sessions        Session[]
-  lastChangedName DateTime?
+  lastChangedName DateTime? @map("last_changed_name")
+
+  @@map("user")
 }
 
 model VerificationToken {
@@ -51,16 +56,38 @@ model VerificationToken {
   expires    DateTime
 
   @@unique([identifier, token])
+  @@map("verification_token")
 }
 
 model Post {
-  id        Int      @id @default(autoincrement())
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
-  title     String   @db.VarChar(255)
-  content   String
-  published Boolean  @default(false)
-  authorId  String
-  thumbnail String   @db.VarChar(255)
-  user      User     @relation(fields: [authorId], references: [id])
+  id         Int                 @id @default(autoincrement())
+  created_at DateTime            @default(now())
+  update_at  DateTime            @updatedAt
+  title      String              @db.VarChar(255)
+  content    String
+  published  Boolean             @default(false)
+  author_id  String
+  thumbnail  String              @db.VarChar(255)
+  user       User                @relation(fields: [author_id], references: [id])
+  categories CategoriesOnPosts[]
+
+  @@map("post")
+}
+
+model Category {
+  id   Int                 @id @default(autoincrement())
+  name String              @unique @db.VarChar(20)
+  post CategoriesOnPosts[]
+
+  @@map("category")
+}
+
+model CategoriesOnPosts {
+  post       Post     @relation(fields: [postId], references: [id])
+  postId     Int      @map("post_id")
+  category   Category @relation(fields: [categoryId], references: [id])
+  categoryId Int      @map("category_id")
+
+  @@id([postId, categoryId])
+  @@map("post_category")
 }

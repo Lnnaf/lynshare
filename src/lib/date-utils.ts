@@ -15,3 +15,13 @@ export function isEnoughDaysPassed(date: Date, days?: number): boolean {
   const daysInMilliseconds = days * millisecondsInADay;
   return Date.now() - new Date(date).getTime() > daysInMilliseconds;
 }
+
+export const convertStringToDateTime = (value: string) => {
+  console.log('convertStringToDateTime', value);
+  
+  moment(value).format("YYYY-MM-DD HH:mm:ss");
+}
+
+export const isValidDate = (value: string) => {
+  return moment(value).isValid();
+}

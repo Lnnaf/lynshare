@@ -1,6 +1,4 @@
-import { PrismaService } from "./prisma.service";
-
-const prisma = PrismaService.getInstance().client();
+import prisma from "./prisma.service";
 
 export const updateUserImage = (userId: string, userImage: string) => {
 	return prisma.user.update({

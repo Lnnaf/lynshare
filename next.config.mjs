@@ -17,9 +17,14 @@ const nextConfig = {
 			},{
 				protocol: "https",
 				hostname: "via.placeholder.com"
-			}
+			},
+			{
+				protocol: "https",
+				hostname: "th.bing.com"
+			}, 
 		],
 	},
+	reactStrictMode: false,
 };
 
 export default nextConfig;

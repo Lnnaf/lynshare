@@ -2,11 +2,9 @@ import NotFound from "@/app/not-found";
 import UserAvatar from "@/components/common/user-avatar";
 import Container from "@/components/layouts/container";
 import { formatDate } from "@/lib/date-utils";
-import { convertToHTML } from "@/lib/plate-utils";
 import { PostDTO } from "@/models/post";
 import { findById } from "@/services/post.service";
 import { User } from "@prisma/client";
-import { Value } from "@udecode/plate-common";
 import Image from "next/image";
 import Link from "next/link";
 
@@ -22,7 +20,7 @@ export default async function Post(props: props) {
 	if (post == null) {
 		return <NotFound />;
 	}
-	const plateData: Value = JSON.parse(post.content);
+	
 	return (
 		<Container>
 			<div className="flex flex-col">
@@ -42,7 +40,7 @@ export default async function Post(props: props) {
 					<div className="flex flex-col ml-2">
 						<p>{post.user.name}</p>
 						<p>{`Posted on ${formatDate(
-							post.createdAt
+							post.created_at
 						)} • Originally published`}</p>
 					</div>
 				</div>
@@ -57,7 +55,7 @@ export default async function Post(props: props) {
 					<Link href="/">#123</Link>
 				</div>
 				{/* content */}
-				<div dangerouslySetInnerHTML={{__html: convertToHTML(plateData)}} />
+				{/* <div dangerouslySetInnerHTML={{__html: convertToHTML(plateData)}} /> */}
 			</div>
 		</Container>
 	);

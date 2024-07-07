@@ -6,7 +6,6 @@ import { Navbar } from "../components/layouts/navbar";
 import AuthProvider from "../context/auth-provider";
 import { ThemeProvider } from "../context/theme-provider";
 import "./globals.css";
-import "../components/plate-ui/code-block-element.css"
 const fontSans = FontSans({
 	subsets: ["latin"],
 	variable: "--font-sans",
